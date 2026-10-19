@@ -69,8 +69,6 @@
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; flex: 1; }
   ol.steps { padding-left: 26px; display: grid; gap: 12px; }
   ol.steps li { font-size: 20px; }
-  .props { display: grid; gap: 10px; margin-top: 26px; }
-  .props p { font-size: 18px; }
   .complex { margin-top: 22px; font-size: 18px; }
 
   .timeline { position: relative; height: 330px; margin-top: 6px; }
@@ -91,7 +89,6 @@
     opacity: 0; transition: left .45s var(--ease), opacity .3s;
   }
   .cursor span { position: absolute; top: -22px; left: -40px; width: 80px; text-align: center; font: 500 12px "JetBrains Mono", monospace; color: var(--accent); }
-  .legend { font-size: 15px; margin-top: 18px; }
 
   /* pseudocode slide */
   pre {
@@ -130,18 +127,16 @@
 
   <!-- Title -->
   <section class="slide title">
-    <div class="num r" style="--i:0">SDT 202 · INITIAL PRESENTATION</div>
     <h1 class="r" style="--i:1">The Activity<br>Selection Problem</h1>
     <div class="rule"></div>
-    <p class="r muted" style="--i:3">Team [N]</p>
+    <p class="r muted" style="--i:3">Team 2</p>
     <ul class="team r" style="--i:4">
-      <li>[Member 1]</li><li>[Member 2]</li><li>[Member 3]</li><li>[Member 4]</li>
+      <li>Rak Bohdan</li><li>Ankudinov Artem</li>
     </ul>
   </section>
 
   <!-- 1. Problem -->
   <section class="slide">
-    <div class="num r" style="--i:0">01 — PROBLEM</div>
     <h2 class="r" style="--i:1">What are we solving?</h2>
     <div class="defs">
       <p class="r" style="--i:2">A set <b>S = {a<sub>1</sub>, …, a<sub>n</sub>}</b> of activities wants to use <b>one shared resource</b> (e.g. a CPU core) that serves one activity at a time.</p>
@@ -153,8 +148,7 @@
 
   <!-- 2. Algorithm -->
   <section class="slide" id="algo">
-    <div class="num r" style="--i:0">02 — ALGORITHM</div>
-    <h2 class="r" style="--i:1">Greedy: earliest finish first</h2>
+    <h2 class="r" style="--i:1">Greedy algorithm: step-by-step mechanism</h2>
     <div class="two">
       <div>
         <ol class="steps">
@@ -162,34 +156,26 @@
           <li class="r" style="--i:3">Select the first one; remember its finish time.</li>
           <li class="r" style="--i:4">For each next activity: if <span class="mono">s<sub>i</sub> ≥ lastFinish</span>, select it; otherwise skip.</li>
         </ol>
-        <div class="props">
-          <p class="r" style="--i:5"><b>Optimal substructure</b> — after a choice, the rest is the same smaller problem.</p>
-          <p class="r" style="--i:6"><b>Greedy choice</b> — finishing earliest leaves the most time for the rest.</p>
-        </div>
-        <p class="complex r muted" style="--i:7">Time <b class="mono">O(n log n)</b> · DP alternative <span class="mono">O(n²)</span></p>
+        <p class="complex r muted" style="--i:5">Time <b class="mono">O(n log n)</b> · DP alternative <span class="mono">O(n²)</span></p>
       </div>
       <div class="r" style="--i:3">
         <div class="timeline" id="tl">
           <div class="cursor" id="cur"><span>lastFinish</span></div>
           <div class="axis"></div>
-        </div>
-        <p class="legend muted">Sorted by finish time · <span style="color:var(--accent)">■</span> selected · <s>skipped</s></p>
-      </div>
+        </div>      </div>
     </div>
   </section>
 
   <!-- 3. Pseudocode -->
   <section class="slide">
-    <div class="num r" style="--i:0">03 — PSEUDOCODE</div>
-    <h2 class="r" style="--i:1">Greedy activity selector</h2>
+    <h2 class="r" style="--i:1">Pseudocode</h2>
 <pre><span class="l" style="--i:0"><span class="kw">if</span> A is empty <span class="kw">then</span></span><span class="l" style="--i:1">    <span class="kw">return</span> empty list</span><span class="l" style="--i:2">sort A by finish time f in non-decreasing order</span><span class="l" style="--i:3">S ← [ A[1] ]</span><span class="l" style="--i:4">lastFinish ← A[1].f</span><span class="l" style="--i:5"><span class="kw">for</span> i ← 2 <span class="kw">to</span> n <span class="kw">do</span></span><span class="l" style="--i:6">    <span class="kw">if</span> A[i].s ≥ lastFinish <span class="kw">then</span></span><span class="l" style="--i:7">        append A[i] to S</span><span class="l" style="--i:8">        lastFinish ← A[i].f</span><span class="l" style="--i:9"><span class="kw">return</span> S</span></pre>
   </section>
 
   <!-- 4. Real-world -->
   <section class="slide">
-    <div class="num r" style="--i:0">04 — REAL-WORLD SITUATION</div>
     <h2 class="r" style="--i:1">Robotic surgery operating room</h2>
-    <p class="r" style="--i:2" >Departments submit non-emergency robotic surgery requests each morning. Only one team can use the room at a time — the coordinator wants <b>as many surgeries as possible</b> in one day.</p>
+    <p class="r" style="--i:2" >Departments submit non-emergency robotic surgery requests each morning. Only one team can use the room at a time, so the coordinator wants <b>as many surgeries as possible</b> in one day.</p>
     <dl class="map">
       <dt class="r" style="--i:3">Resource</dt><dd class="r" style="--i:3">The robotic surgery room</dd>
       <dt class="r" style="--i:4">Activity</dt><dd class="r" style="--i:4">Surgery request: ID, description</dd>
@@ -200,7 +186,6 @@
 
   <!-- 5. Risks -->
   <section class="slide">
-    <div class="num r" style="--i:0">05 — RISKS</div>
     <h2 class="r" style="--i:1">What could go wrong</h2>
     <div class="risks">
       <div class="risk r" style="--i:2"><span class="n">1</span><p><b>Edge cases.</b> Activities that end exactly when another starts, or finish at the same time. → One consistent comparison, tested.</p></div>
